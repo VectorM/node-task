@@ -1,9 +1,7 @@
-import express = require('express');
-import router = express.Router();
+import tools from './tools'
+import practices from './practices'
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
-module.exports = router;
+export {
+  tools,
+  practices
+};

@@ -5,6 +5,10 @@ const schema = new Schema({
     type: String,
     required: true
   },
+  practiceId: {
+    type: Number,
+    required: true
+  },
   description:{
     type: String,
     required: true
