@@ -3,14 +3,20 @@
   "version": "1.0.0",
   "description": "JavaScript development environment Pluralsight course by Cory House",
   "scripts": {
-    "prestart": "babel-node buildScripts/startMessage.js",
-    "start": "npm-run-all --parallel security-check open:src",
-    "open:src": "babel-node buildScripts/srcServer.js",
-    "security-check": "nsp check"
+    "prestart": "babel-node src/utils/startMessage.js",
+    "start": "npm-run-all --parallel security-check open:src lint:watch test:watch",
+    "open:src": "babel-node app.js",
+    "lint": "esw webpack.config.* src --color",
+    "lint:watch": "npm run lint -- --watch",
+    "security-check": "nsp check",
+    "seed": "babel-node seed/practiceSeeder.js",
+    "test": "mocha --reporter progress src/utils/testSetup.js \"src/**/*.test.js\"",
+    "test:watch": "npm run test -- --watch"
   },
   "author": "Cory House",
   "license": "MIT",
   "dependencies": {
+    "mongoose": "^4.11.1",
     "whatwg-fetch": "1.0.0"
   },
   "devDependencies": {
