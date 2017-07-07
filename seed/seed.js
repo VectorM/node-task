@@ -66,6 +66,9 @@ function belongsToAdd(tech, practice, index, length) {
     description: tech.description,
     _created: practice._id
   });
+  practice.technologies.push(techToSave)
+  practice.save()
+  techToSave.save()
 }
 
 Promise.all(practices.map(item => {
