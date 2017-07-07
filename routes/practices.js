@@ -1,7 +1,6 @@
 import express from 'express';
-import chalk from 'chalk';
 import Practice from '../models/practice';
-
+import checkToken from '../helpers/checkToken';
 const router = express.Router();
 
 /* GET ALL Practices. */

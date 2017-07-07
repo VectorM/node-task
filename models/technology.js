@@ -9,9 +9,9 @@ const schema = new Schema({
     type: String,
     required: true
   },
-  technologies: [{ type: Schema.Types.ObjectId, ref: 'Technology' }]
+  _created: { type: String, ref: 'Practice'}
 })
 
-const Practice = mongoose.model('Practice', schema);
+const Technology = mongoose.model('Technology', schema);
 
-export default Practice
+export default Technology
