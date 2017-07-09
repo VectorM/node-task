@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "start": "npm-run-all --parallel security-check open:src lint:watch",
-    "open:src": "nodemon --exec babel-node app.js",
+    "open:src": "babel-node app.js",
     "lint": "esw src --color",
     "lint:watch": "npm run lint -- --watch",
     "security-check": "nsp check",

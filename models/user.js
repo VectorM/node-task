@@ -17,7 +17,7 @@ schema.methods.validPassword = function(password) {
 }
 
 schema.methods.generateToken = function() {
-  return generateGuid
+  return generateGuid()
 }
 
 const User = mongoose.model('User', schema);

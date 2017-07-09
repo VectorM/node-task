@@ -5,9 +5,14 @@ const schema = new Schema({
     type: String,
     required: true
   },
-  description:{
+  description: {
     type: String,
     required: true
+  },
+  technology_id: {
+    type: Number,
+    required: true,
+    unique: true
   },
   technologies: [{ type: Schema.Types.ObjectId, ref: 'Technology' }]
 })

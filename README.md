@@ -21,11 +21,51 @@ install npm packages
 ```
 npm install
 ```
+seed your db
+
+```
+npm run seed
+```
 
 start server, and go to the http://localhost:3000
 
 ```
-npm start -s
+npm start
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+### API
+
+First register user
+
+```
+http:localhost:3000/register
+POST { email, password}
+```
+
+Then login, and retrive auth token
+
+```
+http:localhost:3000/login
+POST { email, password}
+```
+
+Get all practices 
+
+```
+http:localhost:3000/practices
+GET with "authorization" valid token in header
+```
+
+Get technologies by practice
+
+```
+http:localhost:3000/technologies/{practiceId}
+GET with "authorization" valid token in header
+```
+
+
+Pagination, add ?limit={number}&offset={number} to your GET query request e.g
+
+```
+http://localhost:3000/technologies/1?limit=10&offset=0
+```

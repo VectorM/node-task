@@ -7,60 +7,101 @@ mongoose.connect('mongodb://localhost/trainee')
 const practices = [
   new Practice({
     name: 'Web-Development',
-    description: 'Web development is a broad term for the work involved in developing a web site'
+    description: 'Web development is a broad term for the work involved in developing a web site',
+    technology_id: 1,
   }),
   new Practice({
     name: 'IT-technology',
-    description: 'Information technology (IT) is the application of computers to store, study, retrieve, transmit, and manipulate data'
+    description: 'Information technology (IT) is the application of computers to store, study, retrieve, transmit, and manipulate data',
+    technology_id: 2,
   }),
   new Practice({
     name: 'Hobbies',
-    description: 'A hobby is a regular activity that is done for enjoyment, typically during one`s leisure time.'
+    description: 'A hobby is a regular activity that is done for enjoyment, typically during one`s leisure time.',
+    technology_id: 3
   })
 ];
 
 const technologies = [
   {
     name: 'React.js',
-    belongsTo: 'Web-Development',
+    topic: 'Web-Development',
     description: 'Most popular front-end library for building user interfaces.',
   },
   {
     name: 'Angular',
-    belongsTo: 'Web-Development',
+    topic: 'Web-Development',
+    description: 'The AngularJS framework works by first reading the HTML page',
+  },
+  {
+    name: 'React.js',
+    topic: 'Web-Development',
+    description: 'Most popular front-end library for building user interfaces.',
+  },
+  {
+    name: 'Angular',
+    topic: 'Web-Development',
+    description: 'The AngularJS framework works by first reading the HTML page',
+  },
+  {
+    name: 'React.js',
+    topic: 'Web-Development',
+    description: 'Most popular front-end library for building user interfaces.',
+  },
+  {
+    name: 'Angular',
+    topic: 'Web-Development',
+    description: 'The AngularJS framework works by first reading the HTML page',
+  },
+  {
+    name: 'React.js',
+    topic: 'Web-Development',
+    description: 'Most popular front-end library for building user interfaces.',
+  },
+  {
+    name: 'Angular',
+    topic: 'Web-Development',
+    description: 'The AngularJS framework works by first reading the HTML page',
+  },
+  {
+    name: 'React.js',
+    topic: 'Web-Development',
+    description: 'Most popular front-end library for building user interfaces.',
+  },
+  {
+    name: 'Angular',
+    topic: 'Web-Development',
     description: 'The AngularJS framework works by first reading the HTML page',
   },
   {
     name: 'Community',
-    belongsTo: 'IT-technology',
+    topic: 'IT-technology',
     description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit',
   },
   {
     name: 'Internet banking',
-    belongsTo: 'IT-technology',
+    topic: 'IT-technology',
     description: 'Money money money',
   },
   {
     name: 'Football',
-    belongsTo: 'Hobbies',
+    topic: 'Hobbies',
     description: 'Most popular sport game in the world',
   },
   {
     name: 'Baseball',
-    belongsTo: 'Hobbies',
+    topic: 'Hobbies',
     description: 'Most popular sport game in the world',
   },
   {
     name: 'Drink',
-    belongsTo: 'Hobbies',
+    topic: 'Hobbies',
     description: 'Most popular sport game in the world',
   }
 ]
 
-function belongsToAdd(tech, practice, index, length) {
-  if (tech.belongsTo !== practice.name) {
-    return
-  }
+function seedTechnology(tech, practices) {
+  const practice = practices.find(practice => practice.name === tech.topic)
   const techToSave = new Technology({
     name: tech.name,
     description: tech.description,
@@ -71,10 +112,6 @@ function belongsToAdd(tech, practice, index, length) {
   techToSave.save()
 }
 
-Promise.all(practices.map(item => {
-  item.save()
-    .then(practice => {
-      Promise.all(technologies.forEach((tech,index,technologies) => belongsToAdd(tech, practice, index, technologies.length)))
-    })
-  })
-)
+
+Promise.all(technologies.map(technology => seedTechnology(technology, practices)))
+  .then(mongoose.disconnect())

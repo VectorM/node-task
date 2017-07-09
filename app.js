@@ -9,10 +9,11 @@ const app = express();
 mongoose.connect('mongodb://localhost/trainee')
 
 app.use(bodyParser());
-app.use('/', base )
+app.use(bodyParser.urlencoded())
 
+app.use('/', base )
 app.use('/practices', practices)
-// app.use('/technologies', technologies)
+app.use('/technologies', technologies)
 
 app.listen(port, function(err) {
   if (err) {
