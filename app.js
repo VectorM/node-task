@@ -12,7 +12,10 @@ mongoose.connect('mongodb://localhost/trainee')
 
 app.use(bodyParser());
 app.use(bodyParser.urlencoded({ extended: true }))
-
+app.use(session({
+  resave: true,
+  saveUninitialized: true
+}))
 app.use('/', base )
 app.use('/practices', practices)
 app.use('/technologies', technologies)
