@@ -1,24 +1,28 @@
 import express from'express';
 import mongoose from 'mongoose';
-import session from 'express-session';
 import bodyParser from 'body-parser'
 import { base, technologies, practices } from './routes';
 
 import config from './config';
+
+console.log(config)
+
 const port = 3000;
 const app = express();
 
-mongoose.connect('mongodb://localhost/trainee')
+mongoose.connect(config.database, err => {
+  if (err) {
+    throw err
+  }
+
+  console.log('Mongoose connected');
+})
 
 app.use(bodyParser());
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(session({
-  resave: true,
-  saveUninitialized: true
-}))
 app.use('/', base )
 app.use('/practices', practices)
-app.use('/technologies', technologies)
+app.use('/practices/technologies', technologies)
 
 app.listen(port, function(err) {
   if (err) {

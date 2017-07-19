@@ -1,6 +1,6 @@
 import express from 'express';
 import path from 'path';
-import User from '../models/user';
+import { User, Token } from '../models/user';
 
 
 const router = express.Router();
