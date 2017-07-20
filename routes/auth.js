@@ -1,31 +1,35 @@
 import express from 'express';
-import path from 'path';
-import { User, Token } from '../models/user';
+import jwt from 'jsonwebtoken'
+import config from '../config';
+import { User } from '../models';
 
 
 const router = express.Router();
-
-router.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../src/index.html'))
-});
 
 router.post('/login', (req,res) => {
   const { email, password } = req.body
   User.findOne({email}, (err, user) => {
     if (err) {
-      console.log(err);
       return res.status(500).send()
     }
-    console.log('validation', user.validPassword(password))
-    console.log('val2', !user)
-    if (user && user.validPassword(password)) {
-      const token = user.token
-      return res.json({
-        token,
-        success: 'true'
-      })
+    if (!user) {
+      return res.status(404).send({ message: 'No user found' });
+    } else if (user) {
+      if (!user.validPassword(password)) {
+        return res.status(403).send({ message: 'Authentication failed. Wrong password.' });
+      } else {
+        const secret = config.secret;
+        const token = jwt.sign({
+          _id: user._id
+        }, secret, { expiresIn: '1h' });
+
+        res.json({
+          success: true,
+          message: 'Enjoy your token!',
+          token
+        })
+      }
     }
-    return res.status(404).send({ message: 'No user found' });
   })
 })
 
@@ -41,7 +45,6 @@ router.post('/register', (req, res) => {
       const newUser = new User();
       newUser.email = email
       newUser.password = newUser.encryptPassword(password);
-      newUser.token = newUser.generateToken()
       newUser.save((err) => {
         if (err) {
           console.log(err);

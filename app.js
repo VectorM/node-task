@@ -1,13 +1,10 @@
 import express from'express';
 import mongoose from 'mongoose';
+import morgan from 'morgan';
 import bodyParser from 'body-parser'
-import { base, technologies, practices } from './routes';
-
+import { api, auth } from './routes';
 import config from './config';
 
-console.log(config)
-
-const port = 3000;
 const app = express();
 
 mongoose.connect(config.database, err => {
@@ -18,13 +15,18 @@ mongoose.connect(config.database, err => {
   console.log('Mongoose connected');
 })
 
-app.use(bodyParser());
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use('/', base )
-app.use('/practices', practices)
-app.use('/practices/technologies', technologies)
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(morgan('dev'));
 
-app.listen(port, function(err) {
+app.get('/', (req, res) => {
+  res.status(200).send('You connected to the server')
+})
+
+app.use('/auth', auth)
+app.use('/api', api)
+
+app.listen(config.port, function(err) {
   if (err) {
     console.log(err);
   }

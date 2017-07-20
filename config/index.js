@@ -1,6 +1,7 @@
 const config = {
   database: 'localhost/trainee',
-  port: 3000
+  port: process.env.PORT || 3000,
+  secret: 'somesecretkey'
 }
 
 export default config

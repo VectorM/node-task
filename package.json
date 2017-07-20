@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "start": "npm-run-all --parallel security-check open:src lint:watch",
-    "open:src": "babel-node app.js",
+    "open:src": "nodemon --exec babel-node app.js",
     "lint": "esw src --color",
     "lint:watch": "npm run lint -- --watch",
     "security-check": "nsp check",
@@ -17,7 +17,11 @@
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.2",
     "express-session": "^1.15.4",
+    "install": "^0.10.1",
+    "jsonwebtoken": "^7.4.1",
     "mongoose": "^4.11.1",
+    "morgan": "^1.8.2",
+    "npm": "^5.3.0",
     "uuid": "^3.1.0",
     "whatwg-fetch": "1.0.0"
   },

@@ -1,9 +1,7 @@
-import base from './base'
-import technologies from './technologies'
-import practices from './practices'
+import auth from './auth'
+import api from './api'
 
 export {
-  technologies,
-  base,
-  practices
+  auth,
+  api
 };
