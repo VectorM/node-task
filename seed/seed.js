@@ -83,34 +83,40 @@ const technologies = [
     technology_id: 10
   },
   {
+    name: 'Angularz',
+    topic: 'Web-Development',
+    description: 'The AngularJS framework works by first reading the HTML page',
+    technology_id: 11
+  },
+  {
     name: 'Community',
     topic: 'IT-technology',
     description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit',
-    technology_id: 11
+    technology_id: 12
   },
   {
     name: 'Internet banking',
     topic: 'IT-technology',
     description: 'Money money money',
-    technology_id: 12
+    technology_id: 13
   },
   {
     name: 'Football',
     topic: 'Hobbies',
     description: 'Most popular sport game in the world',
-    technology_id: 13
+    technology_id: 14
   },
   {
     name: 'Baseball',
     topic: 'Hobbies',
     description: 'Most popular sport game in the world',
-    technology_id: 14
+    technology_id: 15
   },
   {
     name: 'Drink',
     topic: 'Hobbies',
     description: 'Most popular sport game in the world',
-    technology_id: 15
+    technology_id: 16
   }
 ]
 
