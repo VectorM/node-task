@@ -1,4 +1,5 @@
 import { Technology, Practice } from '../models';
+
 const ITEMS_PER_PAGE = 5;
 
 export const getPractices = (req, res) => {
@@ -31,18 +32,32 @@ export const getTechnologies = (req, res) => {
       res.status(404).send()
     } else {
       const practiceId = practice._id;
-      const { limit, offset } = req.query;
-      const page = +limit || ITEMS_PER_PAGE;
-      Technology.find({_created: practiceId}, (err, technologies) => {
-        const pages = Math.ceil(technologies.length / page)
-        console.log(pages);
+      const { limit, page } = req.query;
+      const options = {
+        select: {
+          name: 1,
+          description: 1,
+          _id: 0
+        },
+        page: parseInt(page) || 1,
+        limit: +limit || ITEMS_PER_PAGE
+      }
+      Technology.paginate({_created: practiceId}, options, (err, result) => {
+        const { docs: data, page, pages } = result;
           if (err) {
               res.status(500).send()
               throw err
           }
-          res.json(technologies)
+          if (data && data.length) {
+            res.json({
+              results: data,
+              page,
+              pages
+            })
+          } else {
+            res.status(404).send('Not found')
+          }
       })
     }
   });
 }
-// ,{name: 1, description: 1, _id: 0}).skip(itemsOffset).limit(itemsLimit).exec

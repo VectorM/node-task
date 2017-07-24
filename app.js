@@ -31,3 +31,5 @@ app.listen(config.port, function(err) {
     console.log(err);
   }
 })
+
+export default app;

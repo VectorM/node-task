@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
+import mongoosePaginate  from 'mongoose-paginate';
 
 const schema = new Schema({
   name: {
@@ -16,6 +17,8 @@ const schema = new Schema({
   },
   _created: { type: String, ref: 'Practice'}
 })
+
+schema.plugin(mongoosePaginate);
 
 const Technology = mongoose.model('Technology', schema);
 
