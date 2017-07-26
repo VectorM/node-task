@@ -9,11 +9,6 @@ const schema = new Schema({
     type: String,
     required: true
   },
-  practice_id: {
-    type: Number,
-    required: true,
-    unique: true
-  },
   technologies: [{ type: Schema.Types.ObjectId, ref: 'Technology' }]
 })
 

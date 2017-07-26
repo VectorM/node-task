@@ -7,7 +7,7 @@
     "open:src": "nodemon --exec babel-node app.js",
     "lint": "esw src --color",
     "lint:watch": "npm run lint -- --watch",
-    "test": "mocha --timeout 10000 --compilers js:babel-core/register test/**",
+    "test": "mocha --timeout 10000 --compilers js:babel-core/register tests/**",
     "security-check": "nsp check",
     "seed": "babel-node seed/seed.js"
   },

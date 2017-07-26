@@ -1,9 +1,9 @@
-import { Technology, Practice } from '../models';
+import { Practice, Technology } from '../models';
 
 const ITEMS_PER_PAGE = 5;
 
 export const getPractices = (req, res) => {
-  Practice.find({}, {name: true, practiceId: true, practice_id:true, description: true, _id: false},(err, data) => {
+  Practice.find({}, {__v: false, technologies: false }, (err, data) => {
     if (err) {
       console.log('ERROR:', err)
     }
@@ -13,7 +13,7 @@ export const getPractices = (req, res) => {
 
 export const getPracticesById = (req, res) => {
   const id = req.params.id
-  Practice.findOne({practice_id: id}, {name: true, practiceId: true, description: true, _id: false},(err, data) => {
+  Practice.findOne({_id: id}, {__v: false, technologies: false }, (err, data) => {
     if (err) {
       console.log('ERROR:', err)
     }
@@ -23,7 +23,7 @@ export const getPracticesById = (req, res) => {
 
 export const getTechnologies = (req, res) => {
   const id = req.params.id
-  Practice.findOne({practice_id: id}, (err, practice) => {
+  Practice.findOne({_id: id}, (err, practice) => {
     if (err) {
       res.status(500).send()
       throw err
@@ -42,7 +42,9 @@ export const getTechnologies = (req, res) => {
         page: parseInt(page) || 1,
         limit: +limit || ITEMS_PER_PAGE
       }
+      console.log(options);
       Technology.paginate({_created: practiceId}, options, (err, result) => {
+        console.log(result);
         const { docs: data, page, pages } = result;
           if (err) {
               res.status(500).send()

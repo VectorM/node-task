@@ -10,11 +10,6 @@ const schema = new Schema({
     type: String,
     required: true
   },
-  technology_id: {
-    type: Number,
-    required: true,
-    unique: true
-  },
   _created: { type: String, ref: 'Practice'}
 })
 
