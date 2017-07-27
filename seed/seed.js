@@ -112,5 +112,13 @@ function seedTechnology(tech, practices) {
   techToSave.save()
 }
 
-Promise.all(technologies.map(technology => seedTechnology(technology, practices)))
-  .then(mongoose.disconnect())
+function createDb() {
+  return new Promise((resolve, reject) => {
+    const db = mongoose.connection.db;
+    db.dropDatabase();
+  })
+  .then(Promise.all(technologies.map(technology => seedTechnology(technology, practices)))
+  .then(mongoose.disconnect()))
+}
+
+createDb()

@@ -27,5 +27,29 @@ describe('API', () => {
       });
     })
   })
+  describe('/GET practices by Id', () => {
+    it('it should GET all the practices', (done) => {
+      chai.request(server)
+      .get('/api/practices')
+      .end((err, res) => {
+          console.log(res.body);
+          res.should.have.status(200);
+          res.body.should.be.a('array');
+        done();
+      });
+    })
+  })
+  describe('/GET technologies by practices', () => {
+    it('it should GET all the practices', (done) => {
+      chai.request(server)
+      .get('/api/practices')
+      .end((err, res) => {
+          console.log(res.body);
+          res.should.have.status(200);
+          res.body.should.be.a('array');
+        done();
+      });
+    })
+  })
 });
 
