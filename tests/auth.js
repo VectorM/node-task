@@ -1,4 +1,4 @@
-import { Practice, Technologies } from '../models';
+import { User } from '../models';
 import server from '../app';
 import chai from 'chai';
 import chaiHttp from 'chai-http';
@@ -7,49 +7,42 @@ const should = chai.should();
 
 chai.use(chaiHttp);
 
-const user = {
+export const user = {
   email: "userfortest@gmail.com",
   password: "12345"
 }
 
-const request = chai.request(server);
-
-describe('API', () => {
-  describe('/GET practices', () => {
-    it('it should GET all the practices', (done) => {
-      chai.request(server)
-      .get('/api/practices')
-      .end((err, res) => {
-          console.log(res.body);
-          res.should.have.status(200);
-          res.body.should.be.a('array');
-        done();
+describe('AUTH', () => {
+  before((done) => {
+    User.remove({email:"userfortest@gmail.com"}, (err) => {
+      if (err) {
+        throw err;
+      }
+       done();
+    });
+  });
+  describe('/POST user', () => {
+      it('it should POST new user ', (done) => {
+        chai.request(server)
+          .post('/auth/register')
+          .send(user)
+          .end((err, res) => {
+              res.should.have.status(200);
+            done();
+          });
       });
-    })
-  })
-  describe('/GET practices by Id', () => {
-    it('it should GET all the practices', (done) => {
-      chai.request(server)
-      .get('/api/practices')
-      .end((err, res) => {
-          console.log(res.body);
-          res.should.have.status(200);
-          res.body.should.be.a('array');
-        done();
+  });
+  describe('/POST login', () => {
+      it('it should auth user ', (done) => {
+        chai.request(server)
+          .post('/auth/login')
+          .send(user)
+          .end((err, res) => {
+              res.body.should.property('token')
+              res.should.have.status(200);
+            done();
+          });
       });
-    })
-  })
-  describe('/GET technologies by practices', () => {
-    it('it should GET all the practices', (done) => {
-      chai.request(server)
-      .get('/api/practices')
-      .end((err, res) => {
-          console.log(res.body);
-          res.should.have.status(200);
-          res.body.should.be.a('array');
-        done();
-      });
-    })
-  })
+  });
 });
 

@@ -42,9 +42,7 @@ export const getTechnologies = (req, res) => {
         page: parseInt(page) || 1,
         limit: +limit || ITEMS_PER_PAGE
       }
-      console.log(options);
       Technology.paginate({_created: practiceId}, options, (err, result) => {
-        console.log(result);
         const { docs: data, page, pages } = result;
           if (err) {
               res.status(500).send()

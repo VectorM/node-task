@@ -108,17 +108,10 @@ function seedTechnology(tech, practices) {
     description: tech.description,
     _created: practice._id
   });
+  practice.technologies.push(techToSave)
   practice.save()
   techToSave.save()
 }
 
-function createDb() {
-  return new Promise((resolve, reject) => {
-    const db = mongoose.connection.db;
-    db.dropDatabase();
-  })
-  .then(Promise.all(technologies.map(technology => seedTechnology(technology, practices)))
-  .then(mongoose.disconnect()))
-}
-
-createDb()
+Promise.all(technologies.map(technology => seedTechnology(technology, practices)))
+  .then(mongoose.disconnect())
