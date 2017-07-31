@@ -1,7 +1,9 @@
 import { Technology, Practice } from '../models';
 import mongoose from 'mongoose';
+import config from '../config';
 
-mongoose.connect('mongodb://localhost/trainee')
+mongoose.connect(config.database)
+mongoose.set('debug', true);
 
 const practices = [
   new Practice({
@@ -114,4 +116,4 @@ function seedTechnology(tech, practices) {
 }
 
 Promise.all(technologies.map(technology => seedTechnology(technology, practices)))
-  .then(mongoose.disconnect())
+.then(mongoose.disconnect())

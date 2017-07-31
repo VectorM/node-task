@@ -1,8 +1,8 @@
-import { Practice, Technology } from '../models';
+import { Practice, Technology, User } from '../models';
 import server from '../app';
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import { user } from './auth';
+import { user } from './auth.test';
 
 chai.use(chaiHttp);
 
@@ -17,6 +17,17 @@ const mockTechnology = {
   _created: mockPractice._id
 }
 
+function cleanDB(withUser) {
+  let models = [
+    Practice.remove({ name: "onlyForTest" }),
+    Technology.remove({ name: "onlyForTest" })
+  ]
+  if (withUser) {
+    models.push(User.remove({ email:"userfortest@gmail.com" }))
+  }
+  return Promise.all(models)
+}
+
 describe('API', () => {
   let token;
 
@@ -25,13 +36,7 @@ describe('API', () => {
   }
 
   before(done => {
-    const models = [
-      Practice.remove(),
-      Technology.remove()
-    ]
-    Promise.all(models).then(() => {
-      console.log('in');
-    })
+    cleanDB()
     .then(() => {
       Promise.all(Array(12).fill(mockTechnology).map((technology) => {
         let newTech = new Technology(technology)
@@ -52,7 +57,9 @@ describe('API', () => {
       });
     })
   })
-
+  after(done => {
+    cleanDB(true).then(() => done())
+  })
   describe('/GET practices', () => {
     it('it should GET all the practices', (done) => {
       chai.request(server)
@@ -72,7 +79,6 @@ describe('API', () => {
       .set(setAuthHeader())
       .end((err, res) => {
           res.should.have.status(200);
-          console.log("BODY", res.body);
           res.body.should.be.a('object');
         done();
       });
@@ -85,8 +91,9 @@ describe('API', () => {
       .set(setAuthHeader())
       .end((err, res) => {
           res.should.have.status(200);
-          console.log('RES_BODY:',res.body);
           res.body.results.length.should.to.equal(5)
+          res.body.should.to.have.property('page')
+          res.body.should.to.have.property('pages')
           res.body.should.be.a('object');
         done();
       });
